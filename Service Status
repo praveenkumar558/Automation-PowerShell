@@ -1,0 +1,31 @@
+Write-Host "Program to Check the Status of the Service"
+$name = Read-Host -Prompt "Enter the Service Name";
+$service = Get-Service
+$servicename =$service.Name
+if(($name -eq " ") -or ($name -notin $servicename))
+{
+Write-Host "Enter the valid Service Name";
+break;
+}
+else
+{
+$type = Get-Service $name
+$status = $type.Status;
+}
+if($status -eq "Running")
+{
+Write-Host "Status is in running state";
+}
+else
+{
+Restart-Service $name
+Write-Host "Status was stopped but now it is in Running State";
+}
+Write-Host "                             "
+Write-Host "*****************************"
+Write-Host "Detailed Analysis on $name"
+Write-Host "---------------------------"
+$dpname=$type.DisplayName
+Write-Host "Display nama of $name is $dpname"
+$stype = $type.ServiceType
+Write-Host "Service Type of $name is $stype"
