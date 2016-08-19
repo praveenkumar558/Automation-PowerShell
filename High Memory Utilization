@@ -1,0 +1,28 @@
+$a= Get-Process | Sort-Object -Descending WS | select -first 5 | select -ExpandProperty ProcessName
+foreach($check in $a)
+{
+if((get-process "$check" -ea SilentlyContinue) -eq $Null){ 
+       $status= echo "Not Running" 
+}
+else{ 
+    $status= echo "Running"
+ }
+ }
+ foreach($check2 in $status)
+ {
+ if( $status -contains "Not Running")
+{
+Stop-Process -Processname $check
+}
+else
+{
+$ab= Get-Process | Sort-Object -Descending WS | select -first 5 | select -ExpandProperty ProcessName
+}
+if($ab -contains $check)
+{
+Echo "High Memory consuming process $a is still active"
+}else
+{
+Echo "$ab is the current high memory consuming process"
+}
+}
